@@ -1,0 +1,39 @@
+I need to create a welcome page for the start of the quiz.
+
+I need a clickable button to start the quiz
+
+I need the quiz to be timed
+
+When the quiz starts,
+    the content of the page needs to change to the first question.
+        I need to change text content and append changes
+    a visible timer needs to start
+
+For each question
+    The timer needs to remain consistent
+    the page needs to change to show a new question and 4 multiple choice answers
+        I need to change text content and append changes
+    a correct answer needs to increase the user score
+    an incorrect answer needs to penalize quiz timed
+
+When the quiz is over
+    I need to change text content and append changes
+    I need to show their total score
+    I need to record the score in memory
+    I need to compare the score to others
+    I need to rank the score relative to other recorded scores
+
+basic needed Variables:
+
+    score: number
+    answerCorrect: boolean
+    answerConfirm: boolean
+    quizStart: boolean
+
+I don't need variables to specify false answers. they can be an 'else' case.
+I DO need to specify which answer has value 'true' 
+
+when a false answer is selected, I need to reduce the timer by the desired value (5s?)
+When the timer hits 0, I need to bring the user to the results page.
+
+I need to use DOM Manipulation to connect my script to the buttons in the page.

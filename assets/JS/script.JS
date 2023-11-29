@@ -1,52 +1,60 @@
-var changingEl = document.querySelector("div");
-var buttons = document.querySelectorAll("button");
-var welcomePage = "welcome";
-var questionPage = "question";
-var questionNum = 0;
+// var changingEl = document.querySelector("div");
+// var button1 = document.getElementById("ans1");
+// var welcomePage = "welcome";
+// var questionPage = "question";
 var score = 0;
 var timer = 90;
 
-console.log(changingEl);
-console.log(welcomePage);
+var questionTitle = document.getElementById("question-title");
 
-changingEl.className = welcomePage;
-if (changingEl.className == welcomePage) {
-  var h2 = document.createElement("h2");
-  h2.textContent = "Welcome to the coding quiz";
-  changingEl.appendChild(h2);
-  var p = document.createElement("p");
-  p.textContent =
-    "You will have 1 and a half minutes to complete the quiz. each incorrect question will reduce your remaining time by 5 seconds";
-  changingEl.appendChild(p);
-  var button1 = document.createElement("button");
-  button1.textContent = "Begin the quiz";
-  changingEl.appendChild(button1);
-  button1.addEventListener("click", function () {
-    changingEl.className = questionPage;
-    questionNum++;
-    changingEl.id = questionNum;
-    h2.textContent = "";
-    p.textContent = "";
-    quiz();
-  });
-}
-function quiz() {
-  var button2 = document.createElement("button");
-  var button3 = document.createElement("button");
-  var button4 = document.createElement("button");
-  if (questionNum === 1) {
-    h2.textContent = "Q" + questionNum + ". what is this?";
-    changingEl.appendChild(h2);
-    button1.textContent = "A. a dog.";
-    button2.textContent = "B. a dog.";
-    button3.textContent = "C. a dog.";
-    button4.textContent = "D. a dog.";
-    changingEl.appendChild(button1);
-    changingEl.appendChild(button2);
-    changingEl.appendChild(button3);
-    changingEl.appendChild(button4);
-    buttons.addEventListener("click", function () {
-      questionNum++;
-    });
-  }
-}
+var questions = [
+  {
+    title: "Why is the sky blue?",
+    correctAns: "absorbed elements",
+    questionChoices: ["absorbed elements", "too much water", "france"],
+  },
+
+  {
+    title: "where am i from",
+    correctAns: "colorado",
+    questionChoices: ["colorado", "germany", "france"],
+  },
+
+  {
+    title: "whats my dogs name",
+    correctAns: "opal",
+    questionChoices: ["opal", "taco", "burger"],
+  },
+];
+
+console.log(questions[0].title);
+//when user clicks iterate through questions array. check if answer is correct.
+// need a variable to story questions index
+var questionIndex = 0;
+
+//want title and choices of currentQuestion
+//we need to dynamicly create buttons for each questionChoices item: for loop
+function currentQuestion() {}
+
+// console.log(button1);
+// console.log(welcomePage);
+
+// function display(questionNum) {
+//   if (questionNum < 1) {
+//     changingEl.setAttribute("class", welcomePage);
+//     document.querySelector("h2").textContent = "Welcome to my coding quiz!";
+//     document.querySelector("p").textContent =
+//       "When you press start, you will have 1 minute and 30 seconds to complete the quiz. Each correct answer will earn you 10 points. answering a question incorrectly will take 10 seconds off your time.";
+//     document.querySelector("button").textContent = "Begin the quiz!";
+//   }
+//   if (questionNum > 0 && questionNum < 11) {
+//     changingEl.setAttribute("class", questionPage);
+//     document.querySelector("h2").textContent = "Question #" + questionNum;
+//   }
+// }
+
+// display(questionNum);
+// button1.addEventListener("click", function () {
+//   questionNum++;
+//   display(questionNum);
+// });

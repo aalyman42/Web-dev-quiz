@@ -24,7 +24,7 @@ When the quiz is over
     I need to rank the score relative to other recorded scores
 
 basic needed Variables:
-
+    timer: number
     score: number
     answerCorrect: boolean
     answerConfirm: boolean

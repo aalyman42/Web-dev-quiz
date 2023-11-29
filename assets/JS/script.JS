@@ -1,12 +1,9 @@
-// var changingEl = document.querySelector("div");
-// var button1 = document.getElementById("ans1");
-// var welcomePage = "welcome";
-// var questionPage = "question";
+//DECLARE VARIABLES
 var score = 0;
 var timer = 90;
-
 var questionTitle = document.getElementById("question-title");
-
+var page = document.getElementById("page");
+var answerList = document.getElementById("answer-list");
 var questions = [
   {
     title: "Why is the sky blue?",
@@ -26,35 +23,52 @@ var questions = [
     questionChoices: ["opal", "taco", "burger"],
   },
 ];
-
-console.log(questions[0].title);
+var buttonsArray = [];
 //when user clicks iterate through questions array. check if answer is correct.
 // need a variable to story questions index
 var questionIndex = 0;
-
+var buttons = document.querySelectorAll("button");
 //want title and choices of currentQuestion
 //we need to dynamicly create buttons for each questionChoices item: for loop
-function currentQuestion() {}
+//FUNCTIONS
+function currentQuestion(questionIndex) {
+  if (questionIndex === 0) {
+    questionTitle.textContent =
+      "Q" + (questionIndex + 1) + ": " + questions[questionIndex].title;
+    createAnswers();
+  }
+  if (questionIndex > 0 && questionIndex <= questions.length) {
+    questionTitle.textContent =
+      "Q" + (questionIndex + 1) + ": " + questions[questionIndex].title;
+    replaceAnswers();
+  }
+}
 
-// console.log(button1);
-// console.log(welcomePage);
+//creat buttons for questionChoices
+function createAnswers() {
+  for (i = 0; i < questions[questionIndex].questionChoices.length; i++) {
+    var answerButton = document.createElement("button");
+    answerButton.textContent = questions[questionIndex].questionChoices[i];
+    buttonsArray.push(questions[questionIndex].questionChoices[i]);
+    page.appendChild(answerButton);
+  }
+}
+//replaces button text with next set of questionChoices index
+function replaceAnswers() {
+  var buttonsText = document.querySelectorAll("button");
+  for (i = 0; i < questions[questionIndex].questionChoices.length; i++) {
+    buttonsText[i].textContent = questions[questionIndex].questionChoices[i];
+    buttonsArray.push(questions[questionIndex].questionChoices[i]);
+  }
+}
+console.log(buttonsArray);
+//EVENT LISTENERS
+page.addEventListener("click", function (event) {
+  var element = event.target;
+  if (element.matches("button")) {
+    questionIndex++;
+    currentQuestion(questionIndex);
+  }
+});
 
-// function display(questionNum) {
-//   if (questionNum < 1) {
-//     changingEl.setAttribute("class", welcomePage);
-//     document.querySelector("h2").textContent = "Welcome to my coding quiz!";
-//     document.querySelector("p").textContent =
-//       "When you press start, you will have 1 minute and 30 seconds to complete the quiz. Each correct answer will earn you 10 points. answering a question incorrectly will take 10 seconds off your time.";
-//     document.querySelector("button").textContent = "Begin the quiz!";
-//   }
-//   if (questionNum > 0 && questionNum < 11) {
-//     changingEl.setAttribute("class", questionPage);
-//     document.querySelector("h2").textContent = "Question #" + questionNum;
-//   }
-// }
-
-// display(questionNum);
-// button1.addEventListener("click", function () {
-//   questionNum++;
-//   display(questionNum);
-// });
+currentQuestion(questionIndex);

@@ -37,3 +37,7 @@ when a false answer is selected, I need to reduce the timer by the desired value
 When the timer hits 0, I need to bring the user to the results page.
 
 I need to use DOM Manipulation to connect my script to the buttons in the page.
+
+need array of objects for questions
+
+    var questions = []

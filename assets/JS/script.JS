@@ -1,14 +1,9 @@
 //VARIABLES
-
 var button = $("<button>");
-var ansOption = $("#answer");
-var beginButton = $("#begin");
-beginButton.text("Begin the quiz");
-// var ansButtons = button.attr("id", "answer");
 var page = $("#page");
 var coreContent = $("#core-content");
 var questionTitle = $("#question-title");
-var secondsRemaining = 90;
+var secondsRemaining = 60;
 var questions = [
   {
     title: "Why is the sky blue?",
@@ -30,12 +25,17 @@ var questions = [
 ];
 var questionIndex = 0;
 var score = 0;
-
+var initials = $(
+  "<input type='text' id='initials' placeholder='Enter your initials'>"
+);
+var timerEl = $("<p>");
 //FUNCTIONS
+
+//page initialization
 function init() {
   questionTitle.text("Welcome to my coding quiz!");
   var welcomeP = $(
-    "<p> You have a minute and a half to complete the quiz </p>"
+    "<p> You have a minute  to complete the quiz. Each question is worth 1 point and each incorrect answer will penalize you by 10 seconds.</p>"
   );
   button.attr("id", "begin");
   button.text("Begin the quiz!");
@@ -43,50 +43,89 @@ function init() {
   coreContent.append(button);
 }
 
+//Quiz functions
 function runQuiz() {
   coreContent.empty();
-  if (questionIndex >= questions.length) {
-    resultsPage();
+  //set timer when quiz starts
+  if (questionIndex === 0) {
+    coreContent.append(timerEl);
+    setTime();
   }
-  questionTitle.text(
-    "Q" + (questionIndex + 1) + ": " + questions[questionIndex].title
-  );
-  for (i = 0; i < questions[questionIndex].questionChoices.length; i++) {
-    ansButtons = $("<button>");
-    ansButtons.text(questions[questionIndex].questionChoices[i]);
-    ansButtons.attr("id", "answer");
-    coreContent.append(ansButtons);
+  //end quiz when out of questions or timer is 0
+  if (questionIndex >= questions.length || secondsRemaining <= 0) {
+    resultsPage();
+  } //cycle through quiz questions
+  else {
+    questionTitle.text(
+      "Q" + (questionIndex + 1) + ": " + questions[questionIndex].title
+    );
+    for (i = 0; i < questions[questionIndex].questionChoices.length; i++) {
+      ansButtons = $("<button>");
+      ansButtons.text(questions[questionIndex].questionChoices[i]);
+      ansButtons.attr("id", "answer");
+      coreContent.append(ansButtons);
+    }
+    coreContent.append(timerEl);
   }
 }
 
+//Display results page
 function resultsPage() {
   coreContent.empty();
   questionTitle.text("Your Score:");
   var finalScore = $("<h3>");
-  finalScore.text(score + "/10");
+  finalScore.text(score + "/" + questions.length);
   coreContent.append(finalScore);
   var scoreForm = $("<form>");
-  var initials = $("<input type='text' placeholder='Enter your name'>");
-  var submitBut = $('<button id="">Submit Score & Play Again</button>');
+  var submitBut = $('<button id="submit">Submit Score & Play Again</button>');
   scoreForm.append(initials);
   scoreForm.append(submitBut);
   coreContent.append(scoreForm);
+
+  var leaderboard = $("<ul>");
+  coreContent.append(leaderboard);
+}
+
+//Timer functionality
+function setTime() {
+  var timeInterval = setInterval(function () {
+    secondsRemaining--;
+    timerEl.text(secondsRemaining + " seconds remaining...");
+
+    if (secondsRemaining === 0) {
+      clearInterval(timeInterval);
+      resultsPage();
+    }
+  }, 1000);
 }
 
 //EVENT LISTENERS
+//
+//begin the quiz
+//
 coreContent.on("click", "#begin", runQuiz);
+//choosing a quiz answer
+//
 coreContent.on("click", "#answer", function (event) {
   var element = event.target;
+  //correct answer chosen
   if (element.textContent == questions[questionIndex].correctAns) {
     score++;
-  } else if (element.textContent !== questions[questionIndex].correctAns) {
+  } //incorrect answer chosen
+  else if (element.textContent !== questions[questionIndex].correctAns) {
     secondsRemaining -= 10;
-  }
+  } //always increse index and run quiz function again
   questionIndex++;
   runQuiz();
-  console.log(score);
-  console.log(secondsRemaining);
 });
-
+//
+//submitting score
+coreContent.on("submit", function (event) {
+  secondsRemaining = 90;
+  questionIndex = 0;
+  score = 0;
+});
+//
+//
 //RUN INIT
 init();

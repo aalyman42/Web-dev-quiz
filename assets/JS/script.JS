@@ -1,9 +1,14 @@
-//DECLARE VARIABLES
-var score = 0;
-var timer = 91;
-var questionTitle = document.getElementById("question-title");
-var page = document.getElementById("page");
-var answerList = document.getElementById("answer-list");
+//VARIABLES
+
+var button = $("<button>");
+var ansOption = $("#answer");
+var beginButton = $("#begin");
+beginButton.text("Begin the quiz");
+// var ansButtons = button.attr("id", "answer");
+var page = $("#page");
+var coreContent = $("#core-content");
+var questionTitle = $("#question-title");
+var secondsRemaining = 90;
 var questions = [
   {
     title: "Why is the sky blue?",
@@ -23,125 +28,65 @@ var questions = [
     questionChoices: ["opal", "taco", "burger"],
   },
 ];
-//when user clicks iterate through questions array. check if answer is correct.
-// need a variable to story questions index
 var questionIndex = 0;
-var ansButtons = document.getElementsByClassName("answer");
-//want title and choices of currentQuestion
-//we need to dynamicly create buttons for each questionChoices item: for loop
-var counter = document.createElement("p");
-var timerEl = document.createElement("p");
+var score = 0;
+
 //FUNCTIONS
-
-//Function for page initialization
 function init() {
-  questionTitle.textContent = "Welcome to my Coding quiz!";
-  var para = document.createElement("p");
-  para.textContent =
-    "You have a minute and a half to complete the quiz. Each correct answer will increase your score and each incorrect answer will reduce your remaining time by 10 seconds.";
-  questionTitle.appendChild(para);
-  var beginButton = document.createElement("button");
-  beginButton.textContent = "Begin the quiz!";
-  questionTitle.appendChild(beginButton);
+  questionTitle.text("Welcome to my coding quiz!");
+  var welcomeP = $(
+    "<p> You have a minute and a half to complete the quiz </p>"
+  );
+  button.attr("id", "begin");
+  button.text("Begin the quiz!");
+  coreContent.append(welcomeP);
+  coreContent.append(button);
 }
 
-//Pulling a question to display
-function currentQuestion() {
-  if (questionIndex > questions.length) {
-    return resultsPage();
-  } else if (questionIndex === 0) {
-    questionTitle.textContent =
-      "Q" + (questionIndex + 1) + ": " + questions[questionIndex].title;
-    createAnswers();
-    counter.textContent = "Current Score: " + score;
-    page.appendChild(counter);
-    makeTimer();
-    page.appendChild(timerEl);
-  } else if (questionIndex > 0 && questionIndex <= questions.length) {
-    questionTitle.textContent =
-      "Q" + (questionIndex + 1) + ": " + questions[questionIndex].title;
-    replaceAnswers();
-    counter.textContent = "Current Score: " + score;
+function runQuiz() {
+  coreContent.empty();
+  if (questionIndex >= questions.length) {
+    resultsPage();
   }
-}
-
-//creat buttons for questionChoices
-function createAnswers() {
+  questionTitle.text(
+    "Q" + (questionIndex + 1) + ": " + questions[questionIndex].title
+  );
   for (i = 0; i < questions[questionIndex].questionChoices.length; i++) {
-    var answerButton = document.createElement("button");
-    answerButton.textContent = questions[questionIndex].questionChoices[i];
-    answerButton.setAttribute("class", "answer");
-    page.appendChild(answerButton);
+    ansButtons = $("<button>");
+    ansButtons.text(questions[questionIndex].questionChoices[i]);
+    ansButtons.attr("id", "answer");
+    coreContent.append(ansButtons);
   }
 }
 
-//replaces button text with next set of questionChoices index
-function replaceAnswers() {
-  var buttonsText = document.querySelectorAll("button");
-  for (i = 0; i < questions[questionIndex].questionChoices.length; i++) {
-    buttonsText[i].textContent = questions[questionIndex].questionChoices[i];
-  }
-}
-
-function makeTimer() {
-  var timeLeft = setInterval(function () {
-    timer--;
-    timerEl.textContent = timer + " seconds left.";
-    if (timer === 0) {
-      clearInterval(timeLeft);
-      timer = 0;
-      resultsPage();
-    }
-    if (timer > 0 && questionIndex >= questions.length - 1) {
-      clearInterval(timeLeft);
-      timer = 0;
-    }
-  }, 1000);
-}
-
-//Function for results page
 function resultsPage() {
-  questionTitle.textContent = "Your score: " + score + "/" + questions.length;
-  counter.textContent = "";
-  timerEl.textContent = "";
-  for (i = 0; i < ansButtons.length; i++) {
-    page.removeChild(ansButtons[i]);
-  }
+  coreContent.empty();
+  questionTitle.text("Your Score:");
+  var finalScore = $("<h3>");
+  finalScore.text(score + "/10");
+  coreContent.append(finalScore);
+  var scoreForm = $("<form>");
+  var initials = $("<input type='text' placeholder='Enter your name'>");
+  var submitBut = $('<button id="">Submit Score & Play Again</button>');
+  scoreForm.append(initials);
+  scoreForm.append(submitBut);
+  coreContent.append(scoreForm);
 }
 
 //EVENT LISTENERS
-page.addEventListener("click", function (event) {
+coreContent.on("click", "#begin", runQuiz);
+coreContent.on("click", "#answer", function (event) {
   var element = event.target;
-  //clicking the correct answer
-  if (questionIndex < questions.length - 1) {
-    if (
-      element.matches("button") &&
-      element.textContent == questions[questionIndex].correctAns
-    ) {
-      score++;
-      questionIndex++;
-      currentQuestion(questionIndex);
-    }
-    //Clicking to start the quiz
-    else if (
-      element.matches("button") &&
-      element.textContent == "Begin the quiz!"
-    ) {
-      currentQuestion();
-    }
-    //Clicking a wrong answer
-    else if (
-      element.matches("button") &&
-      element.textContent !== questions[questionIndex].correctAns
-    ) {
-      //timer loses time
-      timer -= 10;
-      questionIndex++;
-      currentQuestion(questionIndex);
-    }
-  } else if (questionIndex >= questions.length - 1) {
-    resultsPage();
+  if (element.textContent == questions[questionIndex].correctAns) {
+    score++;
+  } else if (element.textContent !== questions[questionIndex].correctAns) {
+    secondsRemaining -= 10;
   }
+  questionIndex++;
+  runQuiz();
+  console.log(score);
+  console.log(secondsRemaining);
 });
 
+//RUN INIT
 init();

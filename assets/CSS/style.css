@@ -1,0 +1,31 @@
+body {
+  font-family: "Open Sans", sans-serif;
+  background-color: lightgray;
+}
+
+#page {
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-top: 1%;
+}
+
+header {
+  background-color: rgb(31, 105, 105);
+  color: rgb(166, 247, 220);
+  padding-bottom: 2%;
+}
+
+h1 {
+  padding-left: 2%;
+}
+
+button {
+  padding-right: 5%;
+  display: block;
+  background-color: rgb(3, 145, 97);
+  font-size: larger;
+  margin: 1%;
+  border-radius: 10px;
+  border-color: white;
+  color: whitesmoke;
+}

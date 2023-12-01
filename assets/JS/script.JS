@@ -6,21 +6,67 @@ var questionTitle = $("#question-title");
 var secondsRemaining = 60;
 var questions = [
   {
-    title: "Why is the sky blue?",
-    correctAns: "absorbed elements",
-    questionChoices: ["absorbed elements", "too much water", "france"],
+    title: "the $ is common syntax of which framework?",
+    correctAns: "JQuery",
+    questionChoices: ["Bootstrap", "JQuery", "WebAPI", "React"],
   },
 
   {
-    title: "where am i from",
-    correctAns: "colorado",
-    questionChoices: ["colorado", "germany", "france"],
+    title: "In dot notation, the left of the dot is always a(n) _______ .",
+    correctAns: "Object",
+    questionChoices: ["Object", "Function", "Array", "Element"],
   },
 
   {
-    title: "whats my dogs name",
-    correctAns: "opal",
-    questionChoices: ["opal", "taco", "burger"],
+    title: "Javascript was created in how many days?",
+    correctAns: "7",
+    questionChoices: ["14", "30", "7", "52"],
+  },
+  {
+    title: "DOM stands for what?",
+    correctAns: "Document Object Model",
+    questionChoices: [
+      "Document Object Model",
+      "Dogs on the Moon",
+      "Development Open Mandate",
+      "Document Order Manipulation",
+    ],
+  },
+  {
+    title:
+      "A function will always check global memory for a variable before checking local memory.",
+    correctAns: "False",
+    questionChoices: ["True", "False"],
+  },
+  {
+    title: "document.querySelectAll() will generate what?",
+    correctAns: "An array",
+    questionChoices: [" A Boolean value", "A string", "A number", "An array"],
+  },
+  {
+    title: "Complete the for loop: for (_____; i < variable.length; i++)",
+    correctAns: "i = 0",
+    questionChoices: ["i != 0", "i >= 0", "i = 0", "i = -1"],
+  },
+  {
+    title: "Javascript runs from ____ to ____",
+    correctAns: "top to bottom",
+    questionChoices: [
+      "bottom to top",
+      "top to bottom",
+      "left to right",
+      "right to left",
+    ],
+  },
+  {
+    title: ".setInverval requires an interval speed in ___",
+    correctAns: "milliseconds",
+    questionChoices: ["minutes", "seconds", "milliseconds", "hours"],
+  },
+  {
+    title: "Would you like the last point for free?",
+    correctAns: "yes, please!",
+    questionChoices: ["I guess...", "no", "I'm good", "yes, please!"],
   },
 ];
 var questionIndex = 0;

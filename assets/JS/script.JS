@@ -75,6 +75,14 @@ var initials = $(
   "<input type='text' id='initials' placeholder='Enter your initials'>"
 );
 var timerEl = $("<p>");
+
+var leaderAllItems = [];
+var leaderListItem = {
+  userName: initials.val(),
+  userScore: score,
+};
+var leaderboard = $("#leaderboard");
+
 //FUNCTIONS
 
 //page initialization
@@ -87,6 +95,22 @@ function init() {
   button.text("Begin the quiz!");
   coreContent.append(welcomeP);
   coreContent.append(button);
+  var leaderList = $("<ul>");
+  leaderList.text("Local Leaderboard:");
+  leaderboard.append(leaderList);
+  leaderString = localStorage.getItem("leaderboard");
+  leaderAllItems = JSON.parse(leaderString);
+  console.log(leaderAllItems);
+  for (i = 0; i < leaderAllItems.length; i++) {
+    leaderLi = $("<li>");
+    leaderLi.text(
+      "Name: " +
+        leaderAllItems[i].userName +
+        " Score: " +
+        leaderAllItems[i].userScore
+    );
+    leaderList.append(leaderLi);
+  }
 }
 
 //Quiz functions
@@ -100,6 +124,7 @@ function runQuiz() {
   //end quiz when out of questions or timer is 0
   if (questionIndex >= questions.length || secondsRemaining <= 0) {
     resultsPage();
+    return;
   } //cycle through quiz questions
   else {
     questionTitle.text(
@@ -128,7 +153,6 @@ function resultsPage() {
   scoreForm.append(submitBut);
   coreContent.append(scoreForm);
 
-  var leaderboard = $("<ul>");
   coreContent.append(leaderboard);
 }
 
@@ -167,6 +191,13 @@ coreContent.on("click", "#answer", function (event) {
 //
 //submitting score
 coreContent.on("submit", function (event) {
+  // event.preventDefault();
+  leaderListItem.userName = initials.val();
+  leaderListItem.userScore = score;
+  console.log(leaderListItem);
+  leaderAllItems.push(leaderListItem);
+  var leaderString = JSON.stringify(leaderAllItems);
+  localStorage.setItem("leaderboard", leaderString);
   secondsRemaining = 90;
   questionIndex = 0;
   score = 0;

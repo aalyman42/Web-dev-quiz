@@ -106,7 +106,7 @@ function init() {
     leaderLi.text(
       "Name: " +
         leaderAllItems[i].userName +
-        " Score: " +
+        " | Score: " +
         leaderAllItems[i].userScore
     );
     leaderList.append(leaderLi);
@@ -191,10 +191,8 @@ coreContent.on("click", "#answer", function (event) {
 //
 //submitting score
 coreContent.on("submit", function (event) {
-  // event.preventDefault();
   leaderListItem.userName = initials.val();
   leaderListItem.userScore = score;
-  console.log(leaderListItem);
   leaderAllItems.push(leaderListItem);
   var leaderString = JSON.stringify(leaderAllItems);
   localStorage.setItem("leaderboard", leaderString);

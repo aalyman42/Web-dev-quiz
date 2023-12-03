@@ -1,31 +1,71 @@
+/* Global applications */
 body {
   font-family: "Open Sans", sans-serif;
   background-color: lightgray;
 }
 
-#page {
-  margin-left: 25%;
-  margin-right: 25%;
-  margin-top: 1%;
-}
-
+/* header element */
 header {
-  background-color: rgb(31, 105, 105);
-  color: rgb(225, 255, 245);
+  background-color: rgb(29, 3, 145);
+  color: rgb(236, 236, 236);
   padding-bottom: 2%;
 }
 
 h1 {
   padding-left: 2%;
 }
+/* main page */
+#page {
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-top: 1%;
+}
 
 button {
-  padding-right: 5%;
+  text-align: center;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
   display: block;
-  background-color: rgb(3, 145, 97);
+  background-color: rgb(29, 3, 145);
   font-size: larger;
   margin: 1%;
   border-radius: 10px;
-  border-color: white;
+  border: none;
   color: whitesmoke;
+  width: 33%;
+}
+hr {
+  margin: 5%;
+}
+
+button:hover {
+  background-color: rgb(70, 46, 177);
+  color: white;
+  box-shadow: 1px 1px 10px rgb(255, 255, 255);
+}
+/* leaderboard section */
+#leaderboard {
+  margin-top: 20px;
+}
+ul {
+  font-size: 20px;
+}
+li {
+  margin-top: 10px;
+  font-size: 15px;
+  list-style: none;
+}
+
+@media screen and (max-width: 576px) {
+  header {
+    text-align: center;
+  }
+  #page {
+    margin-left: 1%;
+    margin-right: 1%;
+    text-align: center;
+  }
+  button {
+    margin-left: 33%;
+  }
 }

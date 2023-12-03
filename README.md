@@ -1,4 +1,4 @@
-# Wed-dev-quiz
+# Web-dev-quiz
 
 ## Description
 
